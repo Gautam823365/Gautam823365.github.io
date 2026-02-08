@@ -25,10 +25,12 @@ updateThemeIcon(currentTheme);
 themeToggle.addEventListener('click', () => {
     const currentTheme = html.getAttribute('data-theme');
     const newTheme = currentTheme === 'light' ? 'dark' : 'light';
-    
+     
+    console.log('Theme toggle clicked. Current:', currentTheme, 'New:', newTheme);
     html.setAttribute('data-theme', newTheme);
     localStorage.setItem('theme', newTheme);
-    
+     console.log('Theme set to:', newTheme);
+    console.log('HTML data-theme attribute:', html.getAttribute('data-theme'));
     // Update icon with animation
     const themeIcon = themeToggle.querySelector('i');
     themeIcon.style.transition = 'transform 0.3s ease';

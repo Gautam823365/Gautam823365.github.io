@@ -12,6 +12,12 @@ if (currentTheme === 'dark') {
     themeIcon.classList.remove('fa-moon');
     themeIcon.classList.add('fa-sun');
 }
+// Detect system preference
+if (!localStorage.getItem('theme')) {
+    const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const initialTheme = systemPrefersDark ? 'dark' : 'light';
+    html.setAttribute('data-theme', initialTheme);
+}
 
 // Toggle theme on button click
 themeToggle.addEventListener('click', () => {

@@ -1,23 +1,25 @@
 // Theme Toggle Functionality
 const themeToggle = document.getElementById('theme-toggle');
 const html = document.documentElement;
-const themeIcon = themeToggle.querySelector('i');
 
 // Check for saved theme preference or default to 'light' mode
 const currentTheme = localStorage.getItem('theme') || 'light';
 html.setAttribute('data-theme', currentTheme);
 
-// Update icon based on current theme
-if (currentTheme === 'dark') {
-    themeIcon.classList.remove('fa-moon');
-    themeIcon.classList.add('fa-sun');
+// Function to update icon based on theme
+function updateThemeIcon(theme) {
+    const themeIcon = themeToggle.querySelector('i');
+    if (theme === 'dark') {
+        themeIcon.classList.remove('fa-moon');
+        themeIcon.classList.add('fa-sun');
+    } else {
+        themeIcon.classList.remove('fa-sun');
+        themeIcon.classList.add('fa-moon');
+    }
 }
-// Detect system preference
-if (!localStorage.getItem('theme')) {
-    const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    const initialTheme = systemPrefersDark ? 'dark' : 'light';
-    html.setAttribute('data-theme', initialTheme);
-}
+
+// Set initial icon
+updateThemeIcon(currentTheme);
 
 // Toggle theme on button click
 themeToggle.addEventListener('click', () => {
@@ -28,16 +30,12 @@ themeToggle.addEventListener('click', () => {
     localStorage.setItem('theme', newTheme);
     
     // Update icon with animation
+    const themeIcon = themeToggle.querySelector('i');
+    themeIcon.style.transition = 'transform 0.3s ease';
     themeIcon.style.transform = 'rotate(360deg)';
     
     setTimeout(() => {
-        if (newTheme === 'dark') {
-            themeIcon.classList.remove('fa-moon');
-            themeIcon.classList.add('fa-sun');
-        } else {
-            themeIcon.classList.remove('fa-sun');
-            themeIcon.classList.add('fa-moon');
-        }
+        updateThemeIcon(newTheme);
         themeIcon.style.transform = 'rotate(0deg)';
     }, 150);
 });
